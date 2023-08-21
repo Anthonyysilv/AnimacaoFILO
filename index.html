@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FILO - First In, Last Out</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(to bottom, #3498db, #2ecc71);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .container {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .process {
+    width: 100px;
+    height: 30px;
+    background-color: #3498db;
+    border-radius: 5px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  .btn-container {
+    margin-top: 20px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #2ecc71;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <h1>FILO - First In, Last Out</h1>
+  <div class="container">
+    <!-- Processes will be added here -->
+  </div>
+  <div class="btn-container">
+    <button id="addProcess">Adicionar Processo</button>
+    <button id="removeProcess">Remover Processo</button>
+  </div>
+
+  <script>
+    const container = document.querySelector('.container');
+    const addProcessButton = document.getElementById('addProcess');
+    const removeProcessButton = document.getElementById('removeProcess');
+    let processCount = 0;
+
+    function addProcess() {
+      if (processCount < 10) {
+        processCount++;
+        const processDiv = document.createElement('div');
+        processDiv.classList.add('process');
+        processDiv.textContent = `Processo ${processCount}`;
+        container.appendChild(processDiv);
+
+        setTimeout(() => {
+          processDiv.style.opacity = '1';
+          processDiv.style.transform = 'translateY(0)';
+        }, 10);
+      }
+    }
+
+    function removeLastProcess() {
+      const lastProcess = container.lastChild;
+      if (lastProcess) {
+        lastProcess.style.opacity = '0';
+        lastProcess.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+          container.removeChild(lastProcess);
+          processCount--;
+        }, 500);
+      }
+    }
+
+    addProcessButton.addEventListener('click', () => {
+      addProcess();
+    });
+
+    removeProcessButton.addEventListener('click', () => {
+      removeLastProcess();
+    });
+  </script>
+</body>
+</html>
